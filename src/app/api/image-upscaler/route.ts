@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { canUseTool, getUsage, incrementUsage } from "@/lib/usage";
+import { isDemoMode, simulateProcessing } from "@/lib/demo";
 
 const TOOL_NAME = "image-upscaler";
 
@@ -43,6 +44,13 @@ export async function POST(request: NextRequest) {
       { error: "Unsupported content type" },
       { status: 415 },
     );
+  }
+
+  // Demo mode: skip Replicate
+  if (isDemoMode()) {
+    await simulateProcessing();
+    const newUsage = await incrementUsage(TOOL_NAME);
+    return NextResponse.json({ resultUrl: imageUrl, usage: newUsage, demo: true });
   }
 
   const token = process.env.REPLICATE_API_TOKEN;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { canUseTool, getUsage, incrementUsage } from "@/lib/usage";
+import { isDemoMode, simulateProcessing } from "@/lib/demo";
 
 /**
  * POST /api/remove-background
@@ -62,7 +63,18 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 3. Call Replicate
+  // 3. Demo mode: skip Replicate, return original image
+  if (isDemoMode()) {
+    await simulateProcessing();
+    const newUsage = await incrementUsage(toolName);
+    return NextResponse.json({
+      resultUrl: imageUrl,
+      usage: newUsage,
+      demo: true,
+    });
+  }
+
+  // 4. Call Replicate
   const replicateApiToken = process.env.REPLICATE_API_TOKEN;
   if (!replicateApiToken) {
     return NextResponse.json(
