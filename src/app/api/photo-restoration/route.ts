@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        version: "9283608cc6b7be6b65a8e44983db012355fde4132009bf99d976b2f0896856a3",
+        version: "0fbacf7afc6c144e5be9767cff80f25aff23e52b0708f17e20f9879b2f21516c",
         input: {
           img: imageUrl,
           scale: 2,
