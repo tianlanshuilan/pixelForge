@@ -35,6 +35,12 @@ export default function Header() {
             </Link>
           ))}
           <Link
+            href="/blog"
+            className="text-sm text-gray-400 transition-colors hover:text-white"
+          >
+            Blog
+          </Link>
+          <Link
             href="/pricing"
             className="rounded-lg bg-purple-600 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-purple-500"
           >
