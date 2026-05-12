@@ -10,6 +10,45 @@ interface UploadZoneProps {
   accept?: string;
 }
 
+/** Resize image to max 1920px, convert to JPEG if large, to stay under 4MB */
+async function preprocessImage(file: File): Promise<File> {
+  // Skip small files
+  if (file.size < 2 * 1024 * 1024 && file.type !== "image/png") return file;
+
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let { width, height } = img;
+      const maxDim = 1920;
+      if (width > maxDim || height > maxDim) {
+        const ratio = Math.min(maxDim / width, maxDim / height);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            resolve(file); // fallback
+            return;
+          }
+          resolve(new File([blob], file.name.replace(/\.[^.]+$/, ".jpg"), { type: "image/jpeg" }));
+        },
+        "image/jpeg",
+        0.85,
+      );
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+    img.src = url;
+  });
+}
+
 export default function UploadZone({
   onUpload,
   disabled,
@@ -17,15 +56,24 @@ export default function UploadZone({
 }: UploadZoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [resizing, setResizing] = useState(false);
 
   const handleFile = useCallback(
     async (file: File) => {
       if (disabled || isProcessing) return;
       setIsProcessing(true);
       try {
-        await onUpload(file);
+        // Preprocess large images before upload
+        let uploadFile = file;
+        if (file.size > 2 * 1024 * 1024 || file.type === "image/png") {
+          setResizing(true);
+          uploadFile = await preprocessImage(file);
+          setResizing(false);
+        }
+        await onUpload(uploadFile);
       } finally {
         setIsProcessing(false);
+        setResizing(false);
       }
     },
     [disabled, isProcessing, onUpload],
@@ -68,7 +116,9 @@ export default function UploadZone({
       {isProcessing ? (
         <>
           <Loader2 className="h-10 w-10 animate-spin text-purple-500" />
-          <p className="text-sm text-gray-400">Processing your image...</p>
+          <p className="text-sm text-gray-400">
+            {resizing ? "Resizing image..." : "Processing your image..."}
+          </p>
         </>
       ) : (
         <>
@@ -80,7 +130,7 @@ export default function UploadZone({
               Drop your image here or click to browse
             </p>
             <p className="mt-1 text-xs text-gray-500">
-              PNG, JPG, WebP up to 10MB
+              PNG, JPG, WebP — automatically resized for fast upload
             </p>
           </div>
         </>
