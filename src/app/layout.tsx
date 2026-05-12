@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   },
   description:
     "Remove backgrounds, upscale images, restore old photos — all with AI. No signup required. Free to try.",
+  verification: {
+    google: "1NTiuVJfSfCRe4fpCT8mFwbPOq2EGQepUhTkq1NhIXI",
+  },
   icons: {
     icon: "/favicon.svg",
   },
