@@ -32,9 +32,13 @@ export default function Header() {
 
         <nav className="hidden items-center gap-5 md:flex">
           {/* Tools dropdown */}
-          <div className="relative" onMouseEnter={() => setToolsOpen(true)} onMouseLeave={() => setToolsOpen(false)}>
-            <button className="flex items-center gap-1 text-sm text-gray-400 hover:text-white transition-colors">
-              Tools <ChevronDown className="h-3 w-3" />
+          <div className="relative">
+            <button
+              onClick={() => setToolsOpen(!toolsOpen)}
+              onBlur={() => setTimeout(() => setToolsOpen(false), 150)}
+              className="flex items-center gap-1 text-sm text-gray-400 hover:text-white transition-colors"
+            >
+              Tools <ChevronDown className={`h-3 w-3 transition-transform ${toolsOpen ? "rotate-180" : ""}`} />
             </button>
             {toolsOpen && (
               <div className="absolute left-0 top-full mt-1 w-56 rounded-lg border border-gray-700 bg-gray-900 py-2 shadow-xl">
