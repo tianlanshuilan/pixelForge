@@ -89,7 +89,7 @@ export default function PricingPage() {
           </ul>
 
           <a
-            href="#checkout"
+            href="https://www.paypal.com/webscr?cmd=_xclick-subscriptions&business=864304493@qq.com&item_name=PixelForge+Pro&a3=9.99&p3=1&t3=M&currency_code=USD&no_note=1&src=1&sra=1"
             className="mt-8 flex items-center justify-center gap-2 rounded-lg bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-purple-500"
           >
             <Zap className="h-4 w-4" />
