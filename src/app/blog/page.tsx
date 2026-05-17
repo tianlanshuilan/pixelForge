@@ -10,6 +10,14 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    title: "6 Free AI Image Tools Every Content Creator Needs (2026)",
+    slug: "free-ai-image-tools-for-content-creators",
+    description:
+      "Discover 6 free AI-powered image tools — remove backgrounds, upscale photos, compress images, convert formats, crop, and restore old pictures. No signup required.",
+    href: "/blog/free-ai-image-tools-for-content-creators",
+    icon: Sparkles,
+  },
+  {
     title: "How to Remove Background from Image — Free AI Tool (2026 Guide)",
     slug: "how-to-remove-background-from-image",
     description:

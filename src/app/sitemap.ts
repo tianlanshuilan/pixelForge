@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "how-to-remove-background-from-image",
     "how-to-upscale-images",
     "how-to-restore-old-photos",
+    "free-ai-image-tools-for-content-creators",
   ];
 
   return [
