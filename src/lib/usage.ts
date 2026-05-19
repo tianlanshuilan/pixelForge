@@ -4,11 +4,14 @@
  * Strategy: store a JSON cookie with per-tool usage counts and date.
  * Reset counts when the date changes.
  * Free tier: 3 uses per tool per day.
+ * Pro tier: unlimited (bypasses check entirely).
  */
 
 import { cookies } from "next/headers";
+import { isPro } from "./pro";
 
 const FREE_LIMIT = 3;
+const PRO_LIMIT = Number.POSITIVE_INFINITY;
 const COOKIE_NAME = "pf_usage";
 
 interface UsageData {
@@ -43,6 +46,11 @@ export async function getUsage(toolName: string): Promise<{
   remaining: number;
   limit: number;
 }> {
+  // Pro users have unlimited access
+  if (await isPro()) {
+    return { used: 0, remaining: PRO_LIMIT, limit: PRO_LIMIT };
+  }
+
   const data = await readUsage();
   const used = data.counts[toolName] ?? 0;
   return {
@@ -55,6 +63,11 @@ export async function getUsage(toolName: string): Promise<{
 export async function incrementUsage(
   toolName: string,
 ): Promise<{ used: number; remaining: number; limit: number }> {
+  // Pro users don't need to increment
+  if (await isPro()) {
+    return { used: 0, remaining: PRO_LIMIT, limit: PRO_LIMIT };
+  }
+
   const data = await readUsage();
   const used = (data.counts[toolName] ?? 0) + 1;
   data.counts[toolName] = used;
@@ -77,6 +90,10 @@ export async function incrementUsage(
 
 /** Check if user has remaining free uses. Call before processing. */
 export async function canUseTool(toolName: string): Promise<boolean> {
+  // Pro users can always use tools
+  if (await isPro()) {
+    return true;
+  }
   const { remaining } = await getUsage(toolName);
   return remaining > 0;
 }

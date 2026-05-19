@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import UploadZone from "@/components/UploadZone";
 import ResultView from "@/components/ResultView";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Crown } from "lucide-react";
 import Link from "next/link";
 
 interface UsageInfo {
@@ -43,10 +43,24 @@ export default function ImageUpscalerPage() {
         <p className="mt-3 text-gray-400">Enlarge images up to 4x without losing quality. AI super-resolution at your fingertips.</p>
         {usage && (
           <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-gray-700 px-4 py-1.5 text-xs text-gray-400">
-            <span>{usage.remaining} / {usage.limit} free uses remaining today</span>
-            <div className="h-1.5 w-16 overflow-hidden rounded-full bg-gray-800">
-              <div className="h-full rounded-full bg-purple-500 transition-all" style={{ width: `${((usage.limit - usage.remaining) / usage.limit) * 100}%` }} />
-            </div>
+            {usage.limit > 999 ? (
+              <>
+                <span className="inline-flex items-center gap-1.5">
+                  <Crown className="h-3 w-3 text-purple-400" />
+                  Pro — Unlimited
+                </span>
+                <div className="h-1.5 w-16 overflow-hidden rounded-full bg-purple-500/30">
+                  <div className="h-full w-full rounded-full bg-purple-500" />
+                </div>
+              </>
+            ) : (
+              <>
+                <span>{usage.remaining} / {usage.limit} free uses remaining today</span>
+                <div className="h-1.5 w-16 overflow-hidden rounded-full bg-gray-800">
+                  <div className="h-full rounded-full bg-purple-500 transition-all" style={{ width: `${((usage.limit - usage.remaining) / usage.limit) * 100}%` }} />
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
