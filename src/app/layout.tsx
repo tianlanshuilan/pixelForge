@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FeedbackWidget from "@/components/FeedbackWidget";
+import StructuredData from "@/components/StructuredData";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -56,6 +57,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="flex min-h-screen flex-col">
+        <StructuredData />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
