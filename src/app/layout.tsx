@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: "PixelForge — Free AI Image Tools Online",
     description:
       "Remove backgrounds, upscale images, restore old photos — all with AI. No signup required.",
-    url: "https://pixelforge.ai",
+    url: "https://pixel-forge-jain.vercel.app",
     siteName: "PixelForge",
     type: "website",
   },
