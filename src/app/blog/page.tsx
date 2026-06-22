@@ -10,6 +10,30 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    title: "Free Background Remover — No Signup, Instant AI Removal (2026)",
+    slug: "free-background-remover-no-signup",
+    description:
+      "Remove image backgrounds instantly with AI. No signup, no credit card. Works on product photos, portraits, and complex images. Free 3 uses per day.",
+    href: "/blog/free-background-remover-no-signup",
+    icon: ImageIcon,
+  },
+  {
+    title: "Compress Image Online Free — No Quality Loss (2026)",
+    slug: "compress-image-online-free",
+    description:
+      "Compress PNG, JPG, WebP images by up to 80% without visible quality loss. Works entirely in your browser — no upload needed.",
+    href: "/blog/compress-image-online-free",
+    icon: Zap,
+  },
+  {
+    title: "Convert PNG to JPG Free Online — Instant, No Upload (2026)",
+    slug: "convert-png-to-jpg-free",
+    description:
+      "Convert between PNG, JPG, and WebP formats instantly in your browser. No signup, no upload, no quality loss. All 6 conversion directions supported.",
+    href: "/blog/convert-png-to-jpg-free",
+    icon: Sparkles,
+  },
+  {
     title: "6 Free AI Image Tools Every Content Creator Needs (2026)",
     slug: "free-ai-image-tools-for-content-creators",
     description:

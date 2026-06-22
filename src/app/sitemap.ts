@@ -13,6 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const blogPosts = [
+    "free-background-remover-no-signup",
+    "compress-image-online-free",
+    "convert-png-to-jpg-free",
     "how-to-remove-background-from-image",
     "how-to-upscale-images",
     "how-to-restore-old-photos",
