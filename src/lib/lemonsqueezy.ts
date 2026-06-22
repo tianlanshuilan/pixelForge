@@ -103,7 +103,7 @@ export async function createCheckout(params: {
           custom: {},
         },
         product_options: {
-          redirect_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://pixel-forge-jain.vercel.app"}/pricing?checkout=success`,
+          redirect_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://pixelforge.ai"}/pricing?checkout=success`,
         },
         checkout_options: {
           subscription_preview: true,
